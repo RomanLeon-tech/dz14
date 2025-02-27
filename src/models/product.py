@@ -7,8 +7,7 @@ class Product:
     :param price: Цена продукта.
     :param quantity: Количество продукта на складе.
     """
-    def __init__(self, name: str, description: str,
-                 price: float, quantity: int):
+    def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self._price = price
@@ -33,3 +32,11 @@ class Product:
             print("Цена не должна быть нулевая или отрицательная")
         else:
             self._price = value
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        if isinstance(other, Product):
+            return self.price * self.quantity + other.price * other.quantity
+        raise TypeError("Операнд должен быть экземпляром класса Product")
