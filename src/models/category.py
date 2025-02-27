@@ -1,5 +1,5 @@
-from typing import List
 from src.models.product import Product
+
 
 class Category:
     """
@@ -7,14 +7,21 @@ class Category:
 
     :param name: Название категории.
     :param description: Описание категории.
-    :param products: Список продуктов категории.
     """
     total_categories = 0
     total_products = 0
 
-    def __init__(self, name: str, description: str, products: List[Product]):
+    def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
-        self.products = products
+        self._products = []
         Category.total_categories += 1
-        Category.total_products += len(products)
+
+    def add_product(self, product: Product):
+        self._products.append(product)
+        Category.total_products += 1
+
+    @property
+    def products(self):
+        return "\n".join(f"{p.name}, {p.price} руб. Остаток: {p.quantity} шт."
+                         for p in self._products)
