@@ -33,3 +33,20 @@ def test_new_product():
     assert product.description == "This is a new product"
     assert product.price == 150.0
     assert product.quantity == 10
+
+
+def test_product_str():
+    product = Product(name="Test Product",
+                      description="This is a test product",
+                      price=100.0, quantity=5)
+    assert str(product) == "Test Product, 100.0 руб. Остаток: 5 шт."
+
+
+def test_product_addition():
+    product1 = Product(name="Product 1",
+                       description="Description 1",
+                       price=10.0, quantity=10)
+    product2 = Product(name="Product 2",
+                       description="Description 2",
+                       price=20.0, quantity=2)
+    assert product1 + product2 == 140.0
