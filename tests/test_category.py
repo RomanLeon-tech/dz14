@@ -1,3 +1,4 @@
+import pytest
 from src.models.category import Category
 from src.models.product import Product
 from src.models.iterable_category import IterableCategory
@@ -49,9 +50,8 @@ def test_products_getter():
                         description="This is a test category")
     category.add_product(product1)
     category.add_product(product2)
-    expected_output = ("Product 1, 10.0 руб. "
-                       "Остаток: 10 шт.\nProduct 2, 20.0 руб. "
-                       "Остаток: 20 шт.")
+    expected_output = ("Product 1, 10.0 руб. Остаток: 10 шт.\nProduct 2, "
+                       "20.0 руб. Остаток: 20 шт.")
     assert category.products == expected_output
 
 
@@ -83,3 +83,10 @@ def test_iterable_category():
     iterable_category = IterableCategory(category)
     products = list(iterable_category)
     assert products == [product1, product2]
+
+
+def test_add_product_type_error():
+    category = Category(name="Test Category",
+                        description="This is a test category")
+    with pytest.raises(TypeError):
+        category.add_product("Not a product")
