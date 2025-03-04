@@ -1,7 +1,15 @@
 import pytest
 from src.models.category import Category
 from src.models.product import Product
+from src.models.smartphone import Smartphone
+from src.models.lawn_grass import LawnGrass
 from src.models.iterable_category import IterableCategory
+
+
+@pytest.fixture(autouse=True)
+def reset_category_counters():
+    Category.total_categories = 0
+    Category.total_products = 0
 
 
 def test_category_initialization():
@@ -50,8 +58,9 @@ def test_products_getter():
                         description="This is a test category")
     category.add_product(product1)
     category.add_product(product2)
-    expected_output = ("Product 1, 10.0 руб. Остаток: 10 шт.\nProduct 2, "
-                       "20.0 руб. Остаток: 20 шт.")
+    expected_output = ("Product 1, 10.0 руб. "
+                       "Остаток: 10 шт.\nProduct 2, 20.0 руб. "
+                       "Остаток: 20 шт.")
     assert category.products == expected_output
 
 
@@ -66,7 +75,8 @@ def test_category_str():
                         description="This is a test category")
     category.add_product(product1)
     category.add_product(product2)
-    assert str(category) == "Test Category, количество продуктов: 30 шт."
+    assert str(category) == ("Test Category, "
+                             "количество продуктов: 30 шт.")
 
 
 def test_iterable_category():
