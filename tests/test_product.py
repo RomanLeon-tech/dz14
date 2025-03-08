@@ -59,7 +59,7 @@ def test_smartphone_initialization():
     smartphone = Smartphone(name="Smartphone 1",
                             description="Description 1",
                             price=500.0, quantity=10,
-                           efficiency="High", model="Model X",
+                            efficiency="High", model="Model X",
                             memory=128, color="Black")
     assert smartphone.name == "Smartphone 1"
     assert smartphone.description == "Description 1"
@@ -75,8 +75,8 @@ def test_lawn_grass_initialization():
     lawn_grass = LawnGrass(name="Lawn Grass 1",
                            description="Description 1",
                            price=50.0, quantity=100,
-                           country="USA", germination_period=30,
-                           color="Green")
+                            country="USA",
+                           germination_period=30, color="Green")
     assert lawn_grass.name == "Lawn Grass 1"
     assert lawn_grass.description == "Description 1"
     assert lawn_grass.price == 50.0
@@ -90,12 +90,13 @@ def test_product_addition_type_error():
     smartphone = Smartphone(name="Smartphone 1",
                             description="Description 1",
                             price=500.0, quantity=10,
-                           efficiency="High", model="Model X",
-                            memory=128, color="Black")
+                            efficiency="High",
+                            model="Model X", memory=128,
+                            color="Black")
     lawn_grass = LawnGrass(name="Lawn Grass 1",
                            description="Description 1",
                            price=50.0, quantity=100,
-                           country="USA", germination_period=30,
-                           color="Green")
+                            country="USA",
+                           germination_period=30, color="Green")
     with pytest.raises(TypeError):
         smartphone + lawn_grass
