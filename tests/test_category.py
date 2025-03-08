@@ -1,8 +1,6 @@
 import pytest
 from src.models.category import Category
 from src.models.product import Product
-from src.models.smartphone import Smartphone
-from src.models.lawn_grass import LawnGrass
 from src.models.iterable_category import IterableCategory
 
 
@@ -58,9 +56,8 @@ def test_products_getter():
                         description="This is a test category")
     category.add_product(product1)
     category.add_product(product2)
-    expected_output = ("Product 1, 10.0 руб. "
-                       "Остаток: 10 шт.\nProduct 2, 20.0 руб. "
-                       "Остаток: 20 шт.")
+    expected_output = ("Product 1, 10.0 руб. Остаток: "
+                       "10 шт.\nProduct 2, 20.0 руб. Остаток: 20 шт.")
     assert category.products == expected_output
 
 
@@ -75,8 +72,8 @@ def test_category_str():
                         description="This is a test category")
     category.add_product(product1)
     category.add_product(product2)
-    assert str(category) == ("Test Category, "
-                             "количество продуктов: 30 шт.")
+    assert str(category) == ("Test Category,"
+                             " количество продуктов: 30 шт.")
 
 
 def test_iterable_category():
@@ -100,3 +97,23 @@ def test_add_product_type_error():
                         description="This is a test category")
     with pytest.raises(TypeError):
         category.add_product("Not a product")
+
+
+def test_average_price():
+    product1 = Product(name="Product 1",
+                       description="Description 1",
+                       price=10.0, quantity=10)
+    product2 = Product(name="Product 2",
+                       description="Description 2",
+                       price=20.0, quantity=20)
+    category = Category(name="Test Category",
+                        description="This is a test category")
+    category.add_product(product1)
+    category.add_product(product2)
+    assert category.average_price() == 15.0
+
+
+def test_average_price_no_products():
+    category = Category(name="Test Category",
+                        description="This is a test category")
+    assert category.average_price() == 0
