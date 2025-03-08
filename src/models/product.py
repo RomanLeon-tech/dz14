@@ -1,4 +1,8 @@
-class Product:
+from src.models.base_product import BaseProduct
+from src.models.mixins import LoggerMixin
+
+
+class Product(LoggerMixin, BaseProduct):
     """
     Класс, представляющий продукт.
 
@@ -9,19 +13,12 @@ class Product:
     """
     def __init__(self, name: str, description: str,
                  price: float, quantity: int):
+        super().__init__(name, description,
+                         price, quantity)
         self.name = name
         self.description = description
         self._price = price
         self.quantity = quantity
-
-    @classmethod
-    def new_product(cls, product_dict: dict):
-        return cls(
-            name=product_dict['name'],
-            description=product_dict['description'],
-            price=product_dict['price'],
-            quantity=product_dict['quantity']
-        )
 
     @property
     def price(self):
@@ -30,14 +27,19 @@ class Product:
     @price.setter
     def price(self, value: float):
         if value <= 0:
-            print("Цена не должна быть нулевая или отрицательная")
+            print("Цена не должна быть нулевая "
+                  "или отрицательная")
         else:
             self._price = value
 
     def __str__(self):
-        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+        return (f"{self.name}, {self.price} руб."
+                f" Остаток: {self.quantity} шт.")
 
     def __add__(self, other):
-        if isinstance(other, Product) and type(self) == type(other):
-            return self.price * self.quantity + other.price * other.quantity
-        raise TypeError("Операнд должен быть экземпляром того же класса")
+        if (isinstance(other, Product) and
+                type(self) == type(other)):
+            return (self.price * self.quantity +
+                    other.price * other.quantity)
+        raise TypeError("Операнд должен быть "
+                        "экземпляром того же класса")
