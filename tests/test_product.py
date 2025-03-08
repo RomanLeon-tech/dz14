@@ -14,6 +14,15 @@ def test_product_initialization():
     assert product.quantity == 5
 
 
+def test_product_initialization_zero_quantity():
+    with pytest.raises(ValueError,
+                       match="Товар с нулевым количеством "
+                             "не может быть добавлен"):
+        Product(name="Test Product",
+                description="This is a test product",
+                price=100.0, quantity=0)
+
+
 def test_product_price_setter():
     product = Product(name="Test Product",
                       description="This is a test product",
@@ -42,7 +51,8 @@ def test_product_str():
     product = Product(name="Test Product",
                       description="This is a test product",
                       price=100.0, quantity=5)
-    assert str(product) == "Test Product, 100.0 руб. Остаток: 5 шт."
+    assert str(product) == ("Test Product, 100.0 руб. "
+                            "Остаток: 5 шт.")
 
 
 def test_product_addition():
@@ -59,8 +69,9 @@ def test_smartphone_initialization():
     smartphone = Smartphone(name="Smartphone 1",
                             description="Description 1",
                             price=500.0, quantity=10,
-                            efficiency="High", model="Model X",
-                            memory=128, color="Black")
+                            efficiency="High",
+                            model="Model X", memory=128,
+                            color="Black")
     assert smartphone.name == "Smartphone 1"
     assert smartphone.description == "Description 1"
     assert smartphone.price == 500.0
